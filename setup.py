@@ -13,7 +13,7 @@ setup(
     license='MIT',
     author='Aaron David Schneider',
     author_email='aarondavid.schneider@nbi.ku.dk',
-    description='interact with your computing cluster via telegram to get realtime information on your running jobs.',
+    description='Interact with your computing cluster via telegram to get realtime information on your running jobs.',
     long_description=long_description,
     long_description_content_type="text/markdown",
     scripts=['bin/mitgcm_cluster_status'],

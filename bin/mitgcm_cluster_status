@@ -1,0 +1,9 @@
+#!/usr/bin/python
+
+from cluster_status import MITgcmHandler, ClusterStatusArgparser, setup, main
+
+if __name__ == "__main__":
+    parser = ClusterStatusArgparser()
+    args = parser.parse_args()
+    setup(args)
+    main(MITgcmHandler)

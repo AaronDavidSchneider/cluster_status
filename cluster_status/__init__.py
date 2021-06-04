@@ -6,6 +6,7 @@ from telethon import TelegramClient
 
 def main(handler):
     conf = read_config()
-    with TelegramClient('bot', int(conf[CONF_API_ID]), str(conf[CONF_API_HASH])).start(bot_token=str(conf[CONF_BOT_TOKEN])) as telegram_bot:
+    with TelegramClient("cluster_status_bot", int(conf[CONF_API_ID]), str(conf[CONF_API_HASH])).start(bot_token=str(conf[CONF_BOT_TOKEN])) as telegram_bot:
         handler(telegram_bot)
+        print("started cluster_status")
         telegram_bot.run_until_disconnected()

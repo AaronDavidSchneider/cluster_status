@@ -49,9 +49,7 @@ def get_parameter(datafile, keyword):
 
 class MITgcmHandler(Handler):
     """Handler for a MITgcm simulation."""
-    def __init__(self, bot):
-        super().__init__(bot)
-
+    def setup(self):
         if "run" not in os.listdir(self.directory):
             raise FileNotFoundError("Your current working directory needs to contain a run directory")
 
@@ -120,6 +118,6 @@ class MITgcmHandler(Handler):
         nIter0 = int(get_parameter(self.datafile, "nIter0"))
         nTimeSteps = int(get_parameter(self.datafile, "nTimeSteps"))
         if bool(self.last_iter):
-            return (nIter0 - self.last_iter) / nTimeSteps * 100
+            return (self.last_iter - nIter0) / nTimeSteps * 100
         else:
             return 0.0

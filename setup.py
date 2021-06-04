@@ -20,6 +20,7 @@ setup(
     install_requires=[
         "f90nml>=1.3.1",
         "telethon",
-        "appdirs"
+        "appdirs",
+        "pyyaml",
     ]
 )

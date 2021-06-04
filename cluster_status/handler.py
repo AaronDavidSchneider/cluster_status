@@ -8,7 +8,12 @@ class Handler:
         self.directory = os.getcwd()
         self.directory_name = os.path.relpath(self.directory, os.pardir)
         self._bot = bot
+        self.setup()
         self._add_subscribtions()
+
+    def setup(self):
+        """Setup children."""
+        pass
 
     def _add_subscribtions(self):
         """Subscribe to the different events."""

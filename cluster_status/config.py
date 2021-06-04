@@ -43,13 +43,14 @@ def setup(args):
 
     if args.config or not os.path.isfile(get_config_path()):
         config = {}
-        print("Get you bot token by starting a chat with the BotFather and creating a bot.\n"
-              "More info: https://core.telegram.org/bots#6-botfather\n")
-        config[CONF_BOT_TOKEN] = str(input("Input a bot token:"))
-        print("Get your own api_id and api_hash from https://my.telegram.org, under API Development.\n"
+        print("    -- cluster_status --   ")
+        print("    starting the configuration.\n")
+        print("Start a chat with the BotFather (https://telegram.me/BotFather) and create your bot.\n")
+        config[CONF_BOT_TOKEN] = str(input("Input a bot token:\n>"))
+        print("\nGet an api_id and api_hash from https://my.telegram.org, under API Development.\n"
               "More info: https://docs.telethon.dev/en/latest/basic/signing-in.html\n")
-        config[CONF_API_ID] = int(input("Input an api id:"))
-        config[CONF_API_HASH] = str(input("Input an api hash:"))
+        config[CONF_API_ID] = int(input("Input an api id:\n>"))
+        config[CONF_API_HASH] = str(input("Input an api hash:\n>"))
 
         safe_config(config)
         print("\nFinished the configuration.")

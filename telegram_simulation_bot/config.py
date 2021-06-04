@@ -1,6 +1,6 @@
-from appdirs import AppDirs
-import yaml
 import os
+import yaml
+from appdirs import AppDirs
 from argparse import ArgumentParser
 
 CONF_API_ID = "api_id"
@@ -43,8 +43,8 @@ def setup(args):
 
     if args.config or not os.path.isfile(get_config_path()):
         config = {}
-        print("    -- telegram_simulation_bot --   ")
-        print("    starting the configuration.\n")
+        print("-- telegram_simulation_bot --")
+        print("starting the configuration.\n")
         print("Start a chat with the BotFather (https://telegram.me/BotFather) and create your bot.\n")
         config[CONF_BOT_TOKEN] = str(input("Input a bot token:\n>"))
         print("\nGet an api_id and api_hash from https://my.telegram.org, under API Development.\n"
@@ -58,22 +58,24 @@ def setup(args):
 
 class ClusterStatusArgparser(ArgumentParser):
     """Class that deals with arguments for the telegram_simulation_bot"""
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.add_argument(
             "-c",
             "--config",
             action='store_true',
-            help="specify if you want to start the config",
+            help="start the config",
         )
         self.add_argument(
             "-d",
             "--delete",
             action='store_true',
-            help="specify if you want to remove your config",
+            help="remove your config",
         )
-
-
-
-
-
+        self.add_argument(
+            "-t",
+            "--type",
+            default="MITgcm",
+            help="specify which type of simulation you want to monitor",
+        )

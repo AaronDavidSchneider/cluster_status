@@ -1,9 +1,10 @@
-from telethon import events
 import os
+from telethon import events
 
 
 class Handler:
     """Base class for the telegrambot event handler."""
+
     def __init__(self, bot):
         self.directory = os.getcwd()
         self.directory_name = os.path.relpath(self.directory, os.pardir)

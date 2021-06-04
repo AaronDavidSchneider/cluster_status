@@ -1,11 +1,13 @@
-from f90nml import Parser
-from .handler import Handler
-import os
 import glob
+import os
+from f90nml import Parser
+
+from .handler import Handler
 
 
 class MITgcmDataParser(Parser):
     """Parser for MITgcm data files."""
+
     def __init__(self):
         super().__init__()
         self.comment_tokens += '#'
@@ -49,6 +51,7 @@ def get_parameter(datafile, keyword):
 
 class MITgcmHandler(Handler):
     """Handler for a MITgcm simulation."""
+
     def setup(self):
         if "run" not in os.listdir(self.directory):
             raise FileNotFoundError("Your current working directory needs to contain a run directory")
@@ -97,7 +100,8 @@ class MITgcmHandler(Handler):
         if not last_iter:
             return await event.respond("No outputs yet.")
 
-        return await event.respond("Highest iteration is {:d} which translates to {:.1f} days.".format(last_iter, self.last_day))
+        return await event.respond(
+            "Highest iteration is {:d} which translates to {:.1f} days.".format(last_iter, self.last_day))
 
     @property
     def last_day(self):

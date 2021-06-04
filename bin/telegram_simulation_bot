@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-from cluster_status import MITgcmHandler, ClusterStatusArgparser, setup, main
+from telegram_simulation_bot import MITgcmHandler, ClusterStatusArgparser, setup, main
 
 if __name__ == "__main__":
     parser = ClusterStatusArgparser()

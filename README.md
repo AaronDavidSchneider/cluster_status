@@ -2,6 +2,11 @@
 
 Interact with your computing cluster via telegram to get realtime information on your running jobs.
 
+<p align="middle">
+  <img src="https://user-images.githubusercontent.com/7556347/120806225-e1b43b80-c546-11eb-8880-9ced55b58f32.PNG" width="250" /> 
+  <img src="https://user-images.githubusercontent.com/7556347/120806232-e2e56880-c546-11eb-9f70-50900ab1b69e.jpeg" width="250" />
+</p>
+
 ## Installation
 From pypi:
 ```

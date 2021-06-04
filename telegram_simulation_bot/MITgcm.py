@@ -68,9 +68,12 @@ class MITgcmHandler(Handler):
 
     def _add_subscribtions(self):
         """Subscribe to the different events."""
-        self._subscribe(f'(?i)status (?i){self.directory_name}', self.respond_status)
-        self._subscribe(f'(?i)progress (?i){self.directory_name}', self.respond_progress)
-        self._subscribe(f'(?i)error (?i){self.directory_name}', self.respond_error)
+        self._subscribe(f'(?i)status {self.directory_name}', self.respond_status)
+        self._subscribe(f'(?i)progress {self.directory_name}', self.respond_progress)
+        self._subscribe(f'(?i)error {self.directory_name}', self.respond_error)
+        self._subscribe(f'(?i)status all', self.respond_status)
+        self._subscribe(f'(?i)progress all', self.respond_progress)
+        self._subscribe(f'(?i)error all', self.respond_error)
         self._subscribe(f'(?i)list', self.respond_all)
 
     async def respond_all(self, event):
@@ -79,29 +82,30 @@ class MITgcmHandler(Handler):
 
     async def respond_progress(self, event):
         """Answer the progress of this simulation."""
-        return await event.respond(f"We are at {self.progress}%.")
+        return await event.respond(f"{self.directory_name}:\nWe are at {self.progress}%.")
 
     async def respond_error(self, event):
         """Answer the errors that are in the STDERR.* files."""
-        errors = ""
+        errors = f"{self.directory_name}:\n"
+        len_0 = len(errors)    # save string length
         for stderr in glob.glob(os.path.join(self.run_dir, "STDERR.*")):
             with open(stderr, "r") as stderr_f:
                 for line in stderr_f:
                     errors += f"{line}\n" if "INI_PARMS" not in line else ""
 
-        if not bool(errors):
-            return await event.respond("No errors yet.")
+        if len(errors) == len_0:
+            return await event.respond(f"{self.directory_name}:\nNo errors yet.")
 
-        return await event.respond(f"We got the following errors:\n{errors}")
+        return await event.respond(f"{self.directory_name}:\nWe got the following errors:\n{errors}")
 
     async def respond_status(self, event):
         """Answer a status update."""
         last_iter = self.last_iter
         if not last_iter:
-            return await event.respond("No outputs yet.")
+            return await event.respond(f"{self.directory_name}:\nNo outputs yet.")
 
         return await event.respond(
-            "Highest iteration is {:d} which translates to {:.1f} days.".format(last_iter, self.last_day))
+            "{}:\nHighest iteration is {:d} which translates to {:.1f} days.".format(self.directory_name, last_iter, self.last_day))
 
     @property
     def last_day(self):

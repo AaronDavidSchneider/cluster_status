@@ -23,9 +23,9 @@ You will be prompted (only once) to configure `telegram_simulation_bot`.
 The following commands in telegram are possible:
 
 * `list` - responds a list of currently running bots
-* `status <name>` - responds the status of `<name>`
-* `error <name>` - responds errors of `<name>`
-* `progress <name>` - responds the progress of `<name>`
+* `status <name>/all` - responds the status of `<name>` or all
+* `error <name>/all` - responds errors of `<name>` or all
+* `progress <name>/all` - responds the progress of `<name>` or all
 
 ### Others:
 There are currently no other simulation types implemented. Feel free to open up a PR for a new simulation type.

@@ -1,5 +1,8 @@
+"""Slightly biased MITgcm telegram bot"""
+
 import glob
 import os
+import subprocess
 from f90nml import Parser
 
 from .handler import Handler
@@ -51,6 +54,8 @@ def get_parameter(datafile, keyword):
 
 class MITgcmHandler(Handler):
     """Handler for a MITgcm simulation."""
+    # convert_script = ['convert_to_gcmt']
+    convert_script = ['sbatch', 'exorad_convert']
 
     def setup(self):
         if "run" not in os.listdir(self.directory):
@@ -71,9 +76,11 @@ class MITgcmHandler(Handler):
         self._subscribe(f'(?i)status {self.directory_name}', self.respond_status)
         self._subscribe(f'(?i)progress {self.directory_name}', self.respond_progress)
         self._subscribe(f'(?i)error {self.directory_name}', self.respond_error)
+        self._subscribe(f'(?i)convert {self.directory_name}', self.respond_convert)
         self._subscribe(f'(?i)status all', self.respond_status)
         self._subscribe(f'(?i)progress all', self.respond_progress)
         self._subscribe(f'(?i)error all', self.respond_error)
+        self._subscribe(f'(?i)convert all', self.respond_convert)
         self._subscribe(f'(?i)list', self.respond_all)
 
     async def respond_all(self, event):
@@ -97,6 +104,15 @@ class MITgcmHandler(Handler):
             return await event.respond(f"{self.directory_name}:\nNo errors yet.")
 
         return await event.respond(f"{self.directory_name}:\nWe got the following errors:\n{errors}")
+
+    async def respond_convert(self, event):
+        """Answer the errors that are in the STDERR.* files."""
+        import subprocess
+        try:
+            subprocess.run(self.convert_script, check=True)
+            return await event.respond(f"{self.directory_name}:\n converting")
+        except subprocess.CalledProcessError:
+            return await event.respond(f"{self.directory_name}:\n error when executing conversion.")
 
     async def respond_status(self, event):
         """Answer a status update."""
